@@ -1,7 +1,17 @@
 <?php
 class Controller_Buy extends Controller_Template
 {
+  public $template = "top";
+	public function action_top()
+	{
+		$data['buys'] = Model_Buy::find('all');
+		$data['users'] = Model_User::find('all');
+    
+    uasort($data['users'], array("Model_User",'cmp'));
+		$this->template->title = "Buys";
+		$this->template->content = View::forge('buy/top', $data);
 
+	}
 	public function action_index()
 	{
 		$data['buys'] = Model_Buy::find('all');
@@ -25,7 +35,7 @@ class Controller_Buy extends Controller_Template
 
 	}
 
-	public function action_create()
+	public function action_create($user_id=null)
 	{
 		if (Input::method() == 'POST')
 		{
@@ -35,7 +45,7 @@ class Controller_Buy extends Controller_Template
 			{
 				$buy = Model_Buy::forge(array(
 					'user_id' => Input::post('user_id'),
-					'date' => Input::post('date'),
+					'date' => time(),
 					'content' => Input::post('content'),
 					'price' => Input::post('price'),
 				));
@@ -44,7 +54,7 @@ class Controller_Buy extends Controller_Template
 				{
 					Session::set_flash('success', 'Added buy #'.$buy->id.'.');
 
-					Response::redirect('buy');
+					Response::redirect('/');
 				}
 
 				else
@@ -58,6 +68,7 @@ class Controller_Buy extends Controller_Template
 			}
 		}
 
+	  $this->template->set_global('user_id', $user_id, false);
 		$this->template->title = "Buys";
 		$this->template->content = View::forge('buy/create');
 
@@ -77,8 +88,8 @@ class Controller_Buy extends Controller_Template
 
 		if ($val->run())
 		{
-			$buy->user_id = Input::post('user_id');
-			$buy->date = Input::post('date');
+			//$buy->user_id = Input::post('user_id');
+			//$buy->date = Input::post('date');
 			$buy->content = Input::post('content');
 			$buy->price = Input::post('price');
 
@@ -86,7 +97,7 @@ class Controller_Buy extends Controller_Template
 			{
 				Session::set_flash('success', 'Updated buy #' . $id);
 
-				Response::redirect('buy');
+				Response::redirect('/');
 			}
 
 			else
@@ -134,5 +145,69 @@ class Controller_Buy extends Controller_Template
 		Response::redirect('buy');
 
 	}
+	public function action_fromgoogle()
+	{
+		if (Input::method() == 'POST')
+		{
+
+			if ($user_id = Input::post("user_id"))
+			{
+        $user = Model_User::find($user_id);
+        if($user){
+          $content = Input::post("content");
+          $each_line = preg_split("/\n/",$content);
+          foreach($each_line as $buy_line){
+            $each_content= preg_split("/[\s]+/",$buy_line);
+            var_dump($each_content);
+            if($each_content[0]){
+              if(strpos($each_content[0],"2014")===FALSE){
+                $each_content[0]= "2014年".$each_content[0];
+              }
+              $day = self::mb_strtotime($each_content[0]);
+              //var_dump($each_content[0],$day);die;
+            }
+            $content = $each_content[1];
+            $price= $each_content[2];
+            var_dump($day,$content,$price);
+            if($day&&$content){
+              $Buy = new Model_Buy();
+              $Buy->user_id= $user->id;
+              $Buy->date = $day;
+              $Buy->content= $content;
+              $Buy->price= $price;
+              $Buy->save();
+            }
+          }
+          Response::redirect("buy/index");
+
+
+        }
+			}
+			else
+			{
+				Session::set_flash('error', $val->error());
+			}
+		}
+		$data['users'] = Arr::assoc_to_keyval(Model_User::find('all'),"id","name");
+		$this->template->title = "Buys";
+		$this->template->content = View::forge('buy/fromgoogle', $data);
+
+	}
+function mb_strtotime($sDate=null, $blnNow=true) {
+ // 日本語版の対応
+ if(preg_match('/^([0-9]{4})[年]{1}([0-9]{1,2})[月]{1}([0-9]{1,2})[日]{1}[\s　]([0-9]{1,2})[時]{1}([0-9]{1,2})[分]{1}([0-9]{1,2})[秒]{1}[\s　]*$/u', $sDate, $match)){  // YYYY年MM月DD日HH時MI分SS秒
+  $sTimestamp = mktime($match[4], $match[5], $match[6], $match[2], $match[3], $match[1]);
+ }elseif(preg_match('/^([0-9]{4})[年]([0-9]{1,2})[月]([0-9]{1,2})[日][\s　]([0-9]{1,2})[時]([0-9]{1,2})[分][\s　]*$/u', $sDate, $match)){ // YYYY年MM月DD日HH時MI分
+  $sTimestamp = mktime($match[4], $match[5], 0, $match[2], $match[3], $match[1]);
+ }elseif(preg_match('/^([0-9]{4})[年]([0-9]{1,2})[月]([0-9]{1,2})[日][\s　]*$/u', $sDate, $match)){ // YYYY年MM月DD日
+  $sTimestamp = mktime(0, 0, 0, $match[2], $match[3], $match[1]);
+
+ // 通常
+ }else {
+  $sTimestamp = strtotime($sDate, $blnNow);
+ }// end if
+ return $sTimestamp;
+}// end function
+
 
 }

@@ -1,4 +1,4 @@
-<h2>Listing <span class='muted'>Buys</span></h2>
+<h2>節約バトル！！！<span class='muted'>Buys</span></h2>
 <br>
 <?php if ($buys): ?>
 <table class="table table-striped">
@@ -15,7 +15,7 @@
 <?php foreach ($buys as $item): ?>		<tr>
 
 			<td><?php echo $item->user_id; ?></td>
-			<td><?php echo $item->date; ?></td>
+			<td><?php echo date("m月d日",$item->date); ?></td>
 			<td><?php echo $item->content; ?></td>
 			<td><?php echo $item->price; ?></td>
 			<td>
@@ -34,5 +34,5 @@
 
 <?php endif; ?><p>
 	<?php echo Html::anchor('buy/create', 'Add new Buy', array('class' => 'btn btn-success')); ?>
-
+	<?php echo Html::anchor('buy/fromgoogle', '一括登録', array('class' => 'btn btn-success')); ?>
 </p>

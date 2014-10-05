@@ -28,7 +28,7 @@ class Model_Buy extends Model
 	{
 		$val = Validation::forge($factory);
 		$val->add_field('user_id', 'User Id', 'required|valid_string[numeric]');
-		$val->add_field('date', 'Date', 'required|valid_string[numeric]');
+		//$val->add_field('date', 'Date', 'required|valid_string[numeric]');
 		$val->add_field('content', 'Content', 'required|max_length[255]');
 		$val->add_field('price', 'Price', 'required|valid_string[numeric]');
 

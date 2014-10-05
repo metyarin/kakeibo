@@ -9,8 +9,6 @@
 	</style>
 </head>
 <body>
-	<div class="container">
-		<div class="col-md-12">
 <?php if (Session::get_flash('success')): ?>
 			<div class="alert alert-success">
 				<strong>Success</strong>
@@ -27,11 +25,7 @@
 				</p>
 			</div>
 <?php endif; ?>
-		</div>
-		<div class="col-md-12">
 <?php echo $content; ?>
-		</div>
 
-	</div>
 </body>
 </html>
