@@ -29,7 +29,7 @@
     <?php foreach ($item->getMonthBuys() as $buy): ?>		<tr>
       <tr>
         <td style="width:40px;border:1px solid #ddd;text-align:center;"><small><?php echo date("d日",$buy->date); ?></small></td>
-        <td style="border:1px solid #ddd;overflow: hidden;"><small><?php echo $buy->content; ?></small></td>
+        <td style="border:1px solid #ddd;overflow: hidden;"><small style="<?php echo $buy->getColorCode()?>"><?php echo $buy->content; ?></small></td>
         <td style="width:40px;border:1px solid #ddd;text-align:right;"><small><?php echo $buy->price; ?></small></td>
       </tr>
     <?php endforeach; ?>

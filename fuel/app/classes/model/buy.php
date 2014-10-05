@@ -34,5 +34,12 @@ class Model_Buy extends Model
 
 		return $val;
 	}
+  public function getColorCode(){
+    $color = Model_Color::query()->where("name","LIKE","%".$this->content."%")->get_one();
+    if($color){
+      return  "color:".$color->code;
+    }
+    return "";
+  }
 
 }
