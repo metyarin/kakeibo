@@ -1,5 +1,18 @@
 <h2>節約バトル！！！</h2>
+<p>  一番になったひとが、みんなから2万円貰える。エキシビションの人も１人1,000円位にしましょうか？嫌な人は日付の下にイヤって書いてください<br />
+食費を除く生活に必須な出費（家賃、光熱費、保険等）は含まれない。クレジットカード支払いも記載,生活に必須ではない出費（Webサービスの月額費、有料チャンネル等）,ギャンブルで増やすのは可,　風俗を利用した場合は店舗と感想も付け加えましょう <br />
+有価証券等は同月内に売買を行った場合にのみ記載しましょう<br />
+  会社から支給される経費はノーカウント。ただし会社から通勤補助がある車通勤勢は（会社からの交通費支給額）−（実際にかかったガソリン代）で計算するようにしましょう <br />
+  エキシビション参加の人はmetyarin@gmail.com宛に1000円のamazonギフトカードを送ってください。お願いします。期限は土日まで。現状12枚<br />
+  https://www.amazon.co.jp/gp/product/B004N3APDM/gcrnsts?ie=UTF8&redirect=true&ref_=s9_ri_bw_g228_i2<br />
+  </p>
 <?php if ($users): ?>
+<table>
+<?php $rank=1; ?>
+<?php foreach ($rank_users as $item): ?>
+  <tr><td><?php echo $rank++; ?>位：</td><td><?php echo $item->name ?></td><td style="text-align:right"><?php echo $item->getTotalPrice();?>円</td>
+<?php endforeach; ?>
+</table>
 <div style="width:<?php echo count($users)*240; ?>px;">
 <?php foreach ($users as $item): ?>
 <div style="width:230px;float:left;padding:0 5px;">
