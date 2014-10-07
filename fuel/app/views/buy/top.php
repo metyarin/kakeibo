@@ -1,4 +1,5 @@
 <h2>節約バトル！！！</h2>
+<h3 style="color:red;">悪意あるクローラー（googleとか言うゴミ）によってデータが消失しましたが、現人神（@dora_the_emon）によって助けられ復旧しました。一部消えてる部分は申し訳ありません</h3>
 <p>  一番になったひとが、みんなから2万円貰える。エキシビションの人も１人1,000円位にしましょうか？嫌な人は日付の下にイヤって書いてください<br />
 食費を除く生活に必須な出費（家賃、光熱費、保険等）は含まれない。クレジットカード支払いも記載,生活に必須ではない出費（Webサービスの月額費、有料チャンネル等）,ギャンブルで増やすのは可,　風俗を利用した場合は店舗と感想も付け加えましょう <br />
 有価証券等は同月内に売買を行った場合にのみ記載しましょう<br />
@@ -23,7 +24,7 @@
 			<th colspan="3" style="text-align:center; background-color:#ddd;padding-top:5px;"><?php echo $item->name; ?></th>
 		</tr>
 		<tr>
-      <th style="text-align:right; background-color:#ddd;"><?php echo Html::anchor('buy/create/'.$item->id, '追加', array('class' => 'btn btn-xs btn-success')); ?></th>
+      <th style="text-align:right; background-color:#ddd;"><?php echo Html::anchor('buy/index/'.$item->id, '編集', array('class' => 'btn btn-xs btn-success')); ?><?php echo Html::anchor('buy/create/'.$item->id, '追加', array('class' => 'btn btn-xs btn-success')); ?></th>
 			<th colspan="2" style="text-align:right; background-color:#ddd;"><span style="color:red;"><?php echo $item->getTotalPrice(); ?>円</span></th>
 		</tr>
     <?php foreach ($item->getMonthBuys() as $buy): ?>		<tr>

@@ -1,7 +1,7 @@
 <?php
 use Orm\Model;
 
-class Model_User extends Model
+class Model_User extends \Orm\Model_Soft
 {
 	protected static $_properties = array(
 		'id',
@@ -15,6 +15,7 @@ class Model_User extends Model
 		'profile_fields',
 		'created_at',
 		'updated_at',
+		'deleted_at',
 	);
 
 	protected static $_observers = array(

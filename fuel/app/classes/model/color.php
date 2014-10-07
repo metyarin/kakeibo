@@ -1,7 +1,7 @@
 <?php
 use Orm\Model;
 
-class Model_Color extends Model
+class Model_Color extends \Orm\Model_Soft
 {
 	protected static $_properties = array(
 		'id',

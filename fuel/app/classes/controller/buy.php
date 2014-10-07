@@ -1,7 +1,6 @@
 <?php
 class Controller_Buy extends Controller_Template
 {
-  public $template = "top";
 	public function action_top()
 	{
 		$data['buys'] = Model_Buy::find('all');
@@ -20,9 +19,13 @@ class Controller_Buy extends Controller_Template
 		$this->template->content = View::forge('buy/top', $data);
 
 	}
-	public function action_index()
+	public function action_index($user_id=null)
 	{
-		$data['buys'] = Model_Buy::find('all');
+    if($user_id){
+		  $data['buys'] = Model_Buy::query()->where("user_id",$user_id)->order_by("created_at","desc")->get();
+    }else{
+		  $data['buys'] = Model_Buy::find('all');
+    }
 		$this->template->title = "Buys";
 		$this->template->content = View::forge('buy/index', $data);
 
@@ -105,7 +108,7 @@ class Controller_Buy extends Controller_Template
 			{
 				Session::set_flash('success', 'Updated buy #' . $id);
 
-				Response::redirect('/');
+				Response::redirect('buy/index/'.$buy->user_id);
 			}
 
 			else
